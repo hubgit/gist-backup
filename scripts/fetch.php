@@ -2,7 +2,13 @@
 
 require __DIR__ . '/headers.php';
 
-$url = 'https://api.github.com/users/hubgit/gists'; // edit this username
+list($command, $username) = $argv;
+
+if (!$username) {
+	exit("Usage: $command username\n");
+}
+
+$url = sprintf('https://api.github.com/users/%s/gists', $username);
 $dir = __DIR__ . '/../gists'; // output directory
 
 do {
@@ -21,12 +27,12 @@ do {
 		// TODO: updates
 		if (file_exists($output)) {
 			print $output . " already exists\n";
-			//continue;
+			continue;
 		}
 
 		$command = sprintf('git clone %s %s', escapeshellarg($item->git_pull_url), escapeshellarg($output));
 		print "> " . $command . "\n";
-		//exec($command);
+		exec($command);
 
 		file_put_contents($output . '.json', json_encode($item));
 	}
