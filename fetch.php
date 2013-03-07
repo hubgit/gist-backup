@@ -9,7 +9,7 @@ if (!$username) {
 }
 
 $url = sprintf('https://api.github.com/users/%s/gists', $username);
-$dir = __DIR__ . '/../gists-' . $username; // output directory
+$dir = __DIR__ . '/gists-' . $username; // output directory
 
 do {
 	print $url . "\n";
