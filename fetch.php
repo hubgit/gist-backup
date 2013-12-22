@@ -8,12 +8,16 @@ if (!$username) {
 	exit("Usage: $command username\n");
 }
 
+$context = stream_context_create(array('http' => array('user_agent' => 'hubgit/gist-backup')));
+
 $url = sprintf('https://api.github.com/users/%s/gists', $username);
 $dir = __DIR__ . '/gists-' . $username; // output directory
 
 do {
 	print $url . "\n";
-	$items = json_decode(file_get_contents($url));
+
+	$json = file_get_contents($url, false, $context);
+	$items = json_decode($json);
 
 	foreach ($items as $item) {
 		$id = $item->id;

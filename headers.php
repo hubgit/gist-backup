@@ -4,13 +4,21 @@ function parseLinkResponseHeaders($headers) {
 	$links = array();
 
 	foreach ($headers as $header) {
-		list($headerName, $headerContent) = preg_split('/:\s+/', $header, 2);
+		$parts = preg_split('/:\s+/', $header, 2);
+
+		if (count($parts) < 2) {
+			continue;
+		}
+
+		list($headerName, $headerContent) = $parts;
 
 		switch ($headerName) {
 			case 'Link':
 				$links = preg_split('/\s*,\s*/', $headerContent);
+
 				foreach ($links as $link) {
 					$linkParts = preg_split('/\s*;\s*/', $link);
+
 					if (preg_match('/^<(.+?)>$/', $linkParts[0], $matches)) {
 						$linkURL = $matches[1];
 
