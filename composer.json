@@ -1,7 +1,7 @@
 {
     "name": "hubgit/gist-backup",
     "require": {
-        "guzzlehttp/guzzle": "^6.2"
+        "hubgit/web-resource": "^0.4"
     },
     "authors": [
         {
